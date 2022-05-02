@@ -16,7 +16,7 @@ type Todo struct {
 }
 
 func main() {
-	r := gin.Default()
+  r := gin.Default()
 
   db, err := gorm.Open(sqlite.Open("db/todo.db"), &gorm.Config{})
   if err != nil {
@@ -26,29 +26,29 @@ func main() {
   // Migrate the schema
   db.AutoMigrate(&Todo{})
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+  r.GET("/ping", func(c *gin.Context) {
+    c.JSON(200, gin.H{
+      "message": "pong",
+    })
+  })
 
-	r.GET("/api/todos", func(c *gin.Context) {
+  r.GET("/api/todos", func(c *gin.Context) {
     var todos []Todo
     db.Find(&todos)
-		c.JSON(200, gin.H{
-			"todos": todos,
-		})
-	})
+    c.JSON(200, gin.H{
+      "todos": todos,
+    })
+  })
 
-	r.POST("/api/todos", func(c *gin.Context) {
+  r.POST("/api/todos", func(c *gin.Context) {
     Title := c.PostForm("Title")
     db.Create(&Todo{
       Title: Title,
       Completed: false,
     })
-		c.JSON(200, gin.H{
-			"success": true,
-		})
+    c.JSON(200, gin.H{
+      "success": true,
+    })
   })
 
   r.POST("/api/todos/:id/complete", func(c *gin.Context) {
@@ -56,9 +56,9 @@ func main() {
     id := c.Param("id")
     db.First(&todo, id)
     db.Model(&todo).Update("Completed", true)
-		c.JSON(200, gin.H{
-			"success": true,
-		})
+    c.JSON(200, gin.H{
+      "success": true,
+    })
   })
 
   r.POST("/api/todos/:id/uncomplete", func(c *gin.Context) {
@@ -66,9 +66,9 @@ func main() {
     id := c.Param("id")
     db.First(&todo, id)
     db.Model(&todo).Update("Completed", false)
-		c.JSON(200, gin.H{
-			"success": true,
-		})
+    c.JSON(200, gin.H{
+      "success": true,
+    })
   })
 
   r.Run(fmt.Sprintf(":%d", PORT))
