@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+CONTAINER_ID=go-todo
+if `docker ps -a | grep $CONTAINER_ID > /dev/null`; then
+  echo 'Killing running container...'
+  docker rm -f $CONTAINER_ID
+fi
+
+docker-compose run \
+  --name $CONTAINER_ID \
+  --detach \
+  --service-ports \
+  --rm \
+  todo \
+  cat

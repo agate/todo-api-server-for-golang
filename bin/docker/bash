@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+CONTAINER_ID=go-todo
+if ! `docker ps | grep $CONTAINER_ID > /dev/null`; then
+  $SCRIPT_DIR/container
+fi
+
+docker exec -it $CONTAINER_ID bash "$@"
