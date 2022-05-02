@@ -61,7 +61,7 @@ func main() {
     })
   })
 
-  r.POST("/api/todos/:id/uncomplete", func(c *gin.Context) {
+  r.POST("/api/todos/:id/incomplete", func(c *gin.Context) {
     var todo Todo
     id := c.Param("id")
     db.First(&todo, id)
