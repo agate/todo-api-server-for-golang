@@ -1,8 +1,11 @@
 **/*.gitignore
-**/*.dockerignore
 .git
+
+**/*.dockerignore
 docker-compose.yml
 Dockerfile
+
+.DS_Store
 
 bin/docker
 db/*.db
